@@ -35,7 +35,7 @@ En este ejercicio, vamos a configurar un objeto de IoT en AWS IoT Core; una vez 
 
 ---
 
-### Parte 1: Crear el objeto.
+### Parte 1: Crear el objeto en AWS IoT Core.
 
 
 Ir al servicio AWS IoT Core
@@ -77,6 +77,9 @@ Ahora en el menú del lado izquierdo **Seguridad -> Certificados**, verá el cer
 
 **¡¡Esto es todo Felicidades!! ya has creado tu primer objeto de AWS IoT con éxito, le has generado un certificado y le has adjuntado una política.**
 
+---
+
+### Parte 2: Crear el objeto en AWS IoT Core.
 
 
 
