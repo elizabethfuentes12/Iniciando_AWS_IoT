@@ -23,9 +23,11 @@ AWS IoT Core es un servicio en la nube administrado que permite a los dispositiv
 ---
 ---
 
-## Ejercicio 1:
+## Ejercicio 1: 
 
 En este ejercicio, vamos a configurar un objeto de IoT en AWS IoT Core; una vez que tenga esa configuración, ejecutaremos un pequeño programa para simular el envío de datos a AWS IoT Core y luego usará el cliente de prueba MQTT para ver la carga útil de cada mensaje MQTT.
+
+!["Ejericio 1"](ejercicio1.png)
 
 ¿Que necesito?
 
