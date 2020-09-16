@@ -1,3 +1,4 @@
 *.pem
 *.drawio
-#.DS_Store
+.DS_Store
+ejercicio1_eli.py

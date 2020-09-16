@@ -81,7 +81,10 @@ Ahora en el menú del lado izquierdo **Seguridad -> Certificados**, verá el cer
 
 ---
 
-### Parte 2: Crear el objeto en AWS IoT Core.
+### Parte 2: Simular dispositivo con programa en python.
+
+Para esta parte debes descargar el siguiente programa [ejercicio1.py] en la misma carpeta donde tienes los certificados descargados y renombrados en la parte anterior. 
+
 
 
 
