@@ -62,7 +62,7 @@ Asegúrese de presionar el botón de **"Activar"** para que se pueda usar el cer
 
  !["Descargar Certificados"](paso1a.png)
  
- !["Descargar CA 1"](paso1a.png)
+ !["Descargar CA 1"](paso1b.png)
 
 Finalice el proceso haciendo clic en el botón "Listo". 
 
