@@ -1,4 +1,4 @@
-##Iniciando AWS IoT
+## Iniciando AWS IoT
 
 En este repositorio vamos a aprender los primeros pasos para integrarnos a mundo de AWS IoT. 
 
@@ -20,13 +20,15 @@ AWS IoT Core es un servicio en la nube administrado que permite a los dispositiv
 
 ---
 
-#Ejercicio 1:
+# Ejercicio 1:
 
 ¿Que necesito?
 
-- Una cuenta AWS. [Crea tu cuenta con capa gratuita aca](https://aws.amazon.com/es/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc)
+- Una cuenta AWS. [Crea tu cuenta con capa gratuita](https://aws.amazon.com/es/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc)
 - Tener instalado un compilador de Python (Anaconda, Visual Studio Code, etc..)
+
   [Descargar Anaconda](https://www.anaconda.com/products/individual)
+  
   [Descargar Visual Studio](https://code.visualstudio.com/download)
 
 - Conocimientos en Python, para entender el código. 
