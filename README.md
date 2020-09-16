@@ -56,7 +56,11 @@ lo que ofrece la capacidad de grabar la clave privada en el dispositivo al momen
 
  !["Descargar Certificados"](paso1a.png)
 
- Descargue el certificado y la clave privada para el dispositivo, y también el CA 1 . 
+ Descargue el certificado y la clave privada para el dispositivo, y también el rootCA 1 . 
+
+- Modifica el nombre de tu certificado a **certificate.pem**
+- Modifica el nombre de tu private key a **privateKey.pem**
+- Modifica el nombre de tu rootCA 1 a **rootCA.pem**
 
  Asegúrese de presionar el botón de **"Activar"** para que se pueda usar el certificado. 
 
@@ -71,7 +75,9 @@ Para crear la politica debes ir al menú del lado izquierdo **Seguridad -> Polí
 
 Ahora en el menú del lado izquierdo **Seguridad -> Certificados**, verá el certificado que ha creado anteriormente, toque los tres puntos de la derecha y elija **Asociar política**, aparecerá una ventana emergente que muestra sus políticas existentes, verifique las recientes política que haya creado y asocie.
 
-¡¡Esto es todo Felicidades!! ya has creado tu primer objeto de AWS IoT con éxito, le has generado un certificado y le has adjuntado una política.
+**¡¡Esto es todo Felicidades!! ya has creado tu primer objeto de AWS IoT con éxito, le has generado un certificado y le has adjuntado una política.**
+
+
 
 
 
