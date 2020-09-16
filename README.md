@@ -37,13 +37,35 @@ En este ejercicio, vamos a configurar un objeto de IoT en AWS IoT Core; una vez 
 - [x] Conocimientos en Python, para entender el código. 
 
 
+
 ### Parte 1: Crear el objeto.
+
 
 Ir al servicio AWS IoT Core
 
 !["Paso 1"](paso1.png)
 
-En el siguiente menú seleccionar "Crear solo un objeto"
+
+En el siguiente menú seleccionar Click a **"Crear solo un objeto"**
+
+Para este ejercicio le colocaremos el nombre de **objeto1** y le damos Click a **"Siguiente"**
+
+En el siguiente paso debes darle Click a **"Crear Certificado"**
+ 
+
+Un certificado X.509 individual por dispositivo es la forma recomendada de interactuar con los servicios de AWS IoT desde los dispositivos, 
+lo que ofrece la capacidad de grabar la clave privada en el dispositivo al momento de la inscripción que luego nunca se transfiere a través de Internet junto con las solicitudes, una ventaja de seguridad. 
+
+Descargue el certificado y la clave privada para el dispositivo, y también el CA 1 . 
+
+Asegúrese de presionar el botón de **"Activar"** para que se pueda usar el certificado. 
+
+ !["Descargar Certificados"](paso1a.png)
+ 
+ !["Descargar CA 1"](paso1a.png)
+
+Finalice el proceso haciendo clic en el botón "Listo". 
+
 
 
 
