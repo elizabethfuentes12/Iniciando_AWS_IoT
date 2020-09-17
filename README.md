@@ -133,7 +133,7 @@ En este ejercicio usaremos el mismo objeto creado en el paso anterior.
 - [x] Una cuenta AWS. [Crea tu cuenta con capa gratuita](https://aws.amazon.com/es/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc)
 - [x] Un NodeMCU ESP8266. Disponible en cualquier tienda on-line [ejemplo](https://www.amazon.com/-/es/Internet-desarrollo-inalámbrico-funciona-Micropython/dp/B07R4MVSCY/ref=sr_1_6?__mk_es_US=ÅMÅŽÕÑ&dchild=1&keywords=NodeMCU+ESP8266&qid=1600307883&sr=8-6).
 - [x] Tener instalado en tu computador Arduino. [Link de descarga](https://www.arduino.cc/en/main/software)
-- [x] Tener instalado en tu computador OpenSSL. [Link de como hacerlo]()
+- [x] Tener instalado en tu computador OpenSSL. [Link de como hacerlo](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/blob/master/instalarOpenSSL.md)
 
 Puedes conocer un poco mas de NodeMCU en su [Datasheet](hhttps://www.esploradores.com/datasheet-nodemcu/)
 
@@ -151,7 +151,7 @@ PEM: (correo electrónico con privacidad mejorada) Simplemente un certificado DE
 
 Dado que nuestro ESP8266 no comprende la codificación base64, convertiremos ese certificado a binario DER. 
 
-Para continuar debes asegurarte que tengas instalado OpenSSL de no ser asi revisa como hacerlo en este [Link]()
+Para continuar debes asegurarte que tengas instalado OpenSSL de no ser asi revisa como hacerlo en este [Link](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/blob/master/instalarOpenSSL.md)
 
 Una vez instalado OpenSSL, podremos usarlo para convertir nuestros certificados a DER usando los siguientes comandos en tu terminal: 
 
