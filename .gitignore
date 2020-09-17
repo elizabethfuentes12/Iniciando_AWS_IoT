@@ -2,3 +2,4 @@
 *.drawio
 .DS_Store
 ejercicio1_eli.py
+.gitignore

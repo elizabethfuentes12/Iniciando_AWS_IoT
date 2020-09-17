@@ -16,7 +16,7 @@ Este tutorial consiste en dos ejercicios uno usando python y otro usando un Node
 
 AWS IoT Core es un servicio en la nube administrado que permite a los dispositivos conectados interactuar de manera fácil y segura con las aplicaciones en la nube y otros dispositivos.
 
-!["AWS IoT Core"](AWS_IoT_Core.png)
+!["AWS IoT Core"](imagen/AWS_IoT_Core.png)
 
 [Conoce más sobre AWS IoT Core](https://aws.amazon.com/es/iot-core/?nc=sn&loc=2&dn=3)
 
@@ -27,7 +27,7 @@ AWS IoT Core es un servicio en la nube administrado que permite a los dispositiv
 
 En este ejercicio, vamos a configurar un objeto de IoT en AWS IoT Core; una vez que tenga esa configuración, ejecutaremos un pequeño programa para simular el envío de datos a AWS IoT Core y luego usará el cliente de prueba MQTT para ver la carga útil de cada mensaje MQTT.
 
-!["Ejericio 1"](ejercicio1.png)
+!["Ejericio 1"](imagen/ejercicio1.png)
 
 ¿Que necesito?
 
@@ -42,7 +42,7 @@ En este ejercicio, vamos a configurar un objeto de IoT en AWS IoT Core; una vez 
 
 Ir al servicio AWS IoT Core
 
-!["Paso 1"](paso1.png)
+!["Paso 1"](imagen/paso1.png)
 
 
 En el siguiente menú seleccionar Click a **"Crear solo un objeto"**
@@ -56,7 +56,7 @@ Un certificado X.509 individual por dispositivo es la forma recomendada de inter
 lo que ofrece la capacidad de grabar la clave privada en el dispositivo al momento de la inscripción que luego nunca se transfiere a través de Internet junto con las solicitudes, una ventaja de seguridad. 
 
 
- !["Descargar Certificados"](paso1a.png)
+ !["Descargar Certificados"](imagen/paso1a.png)
 
  Descargue el certificado y la clave privada para el dispositivo, y también el rootCA 1 . 
 
@@ -67,7 +67,7 @@ lo que ofrece la capacidad de grabar la clave privada en el dispositivo al momen
  Asegúrese de presionar el botón de **"Activar"** para que se pueda usar el certificado. 
 
 
- !["Descargar CA 1"](paso1b.png)
+ !["Descargar CA 1"](imagen/paso1b.png)
 
 Finalice el proceso haciendo clic en el botón **"Listo"**. 
 
@@ -106,7 +106,7 @@ Ve al menu de abajo a la izquierda **"Prueba"** y en Publicar especifica el mens
 mqttc.publish("data", message, 0)
 ```
 
-!["Configurar la prueba"](paso2.png)
+!["Configurar la prueba"](imagen/paso2.png)
 
 Finalizas dandole click a **"Suscribirse al tema"**
 
@@ -118,7 +118,7 @@ python ejercicio1.py
 
 y si todo esta OK podrias empezar a ver la información. 
 
-!["Resultado paso2"](paso2a.png)
+!["Resultado paso2"](imagen/paso2a.png)
 
 Para cancelar la ejecucion debes presionar **"ctrl + c"**
 
