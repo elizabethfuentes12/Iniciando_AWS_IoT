@@ -156,7 +156,16 @@ PEM: (correo electrónico con privacidad mejorada) Simplemente un certificado DE
 
 Dado que nuestro ESP8266 no comprende la codificación base64, convertiremos ese certificado a binario DER. 
 
-Para continuar debes asegurarte que tengas instalado OpenSSL de no ser asi revisa como hacerlo en este [Link](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/blob/master/instalarOpenSSL.md)
+Para continuar debes asegurarte que tengas instalado OpenSSL, pare evisar escrive en tu linea de comando:
+
+```
+openssl
+```
+Si la respuesta es:
+```
+OpenSSL>
+```
+Entonces lo tienes instalado y puedes seguir avanzando, de lo contrario revisa como hacerlo en este [Link](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/blob/master/instalarOpenSSL.md)
 
 Una vez instalado OpenSSL, podremos usarlo para convertir nuestros certificados a DER usando los siguientes comandos en tu terminal: 
 
@@ -180,11 +189,17 @@ Mira este artículo: [NodeMCU programming with Arduino](https://electronicsinnov
 
 Ahora debemos cargar el complemento de Arduino ESP8266 que empaqueta los certificados en carpeta de **data** en la imagen del sistema de archivos SPIFFS y carga la imagen en la memoria flash de nuestro ESP8266.
 
-- Descargue el archivo de herramientas "ESP8266FS-0.4.0.zip" [Git hub releases page](https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.5.0).
-- Dentro de la carpeta de Arduino, cree una nueva carpeta con el nombre tools, si aún no existe.
-- Descomprima la herramienta en el directorio de herramientas (la ruta se verá como <carpeta arduino> /tools/ESP8266FS/tool/esp8266fs.jar).
+- Descarga la herramienta para pasar los archivos a la memoria del ESP8266 **"ESP8266FS-0.4.0.zip"** [Git hub releases page](https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.5.0).
+
+- Dentro de la carpeta de Arduino, cree una nueva carpeta con el nombre tools, si aún no existe y descomprima el **"ESP8266FS-0.4.0.zip"** dentro de ella y se debe ver como <carpeta arduino> /tools/ESP8266FS/tool/esp8266fs.jar).
+
+!["Captura Tools"](imagen/captura_tools.png)
+
+
 - Reinicie Arduino IDE.
 - Seleccione "herramientas> Carga de datos de boceto ESP8266" estará allí.
+
+!["Captura Tools"](imagen/herramienta.png)
 
 Creditos de esta herramienta a: Hristo Gochkov.
 
