@@ -171,7 +171,15 @@ Primero aregurate de tener instalado Arduino, de no ser asi [Link de descarga](h
 Una vez te asegures de lo anterior debes revisar que Arduino tenga el complemento ESP8266 instalado. Si no sabes cómo instalar el complemento ESP8266,
 Mira este artículo: [NodeMCU programming with Arduino](https://electronicsinnovation.com/nodemcu-arduinoide/).
 
+Ahora debemos cargar el complemento de Arduino ESP8266 que empaqueta los certificados en carpeta de **data** en la imagen del sistema de archivos SPIFFS y carga la imagen en la memoria flash de nuestro ESP8266.
 
+- Descargue el archivo de herramientas "ESP8266FS-0.4.0.zip" [Git hub releases page](https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.5.0).
+- Dentro de la carpeta de Arduino, cree una nueva carpeta con el nombre tools, si aún no existe.
+- Descomprima la herramienta en el directorio de herramientas (la ruta se verá como <carpeta arduino> /tools/ESP8266FS/tool/esp8266fs.jar).
+- Reinicie Arduino IDE.
+- Seleccione "herramientas> Carga de datos de boceto ESP8266" estará allí.
+
+Creditos de esta herramienta a: Hristo Gochkov.
 
 ### Parte 3: Configuración en Arduino para el Objeto. 
 
@@ -191,6 +199,12 @@ Primero que todo debemos crear una tabla en DynamondDB, para esto debemos ir al 
 !["Crer Tabla DynamodDB"](imagen/crear_tabla.png)
 
 Una vez creada la tabla vamos al servicio AWS IoT Core 
+
+!["Crer vista_dynamodDB"](imagen/vista_dynamodDB.png)
+
+### Parte 2: Envio de notificaciones pre-configuradas por SMS y correo electronico. 
+
+### Parte 3: Envio de notificaciones a CloudWatch
 
 
 
