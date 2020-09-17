@@ -31,34 +31,27 @@ def json_encode(string):
 
 mqttc.json_encode=json_encode
 
-#Declarando las variables
-
-
-message ={
-  'ID': id,
-  'Velocidad': random.randint(0,120),
-  'Fecha': str(dt.datetime.now()),
-  'message': "Mensaje de Prueba"
-}
-
-#decodificando el JSON
-message = mqttc.json_encode(message)
-
 #Aca enviamos nuestro mensaje a iot topic
 
 def send():
-    id=0
-    mqttc.publish("iot", message, 0)
-    id=id+1
+    mqttc.publish("data", message, 0)
     print ("Mensaje Publicado")
+    #conectando al gateway
+    mqttc.connect()
+    print ("Conectado")
 
-
-#conectando al gateway
-mqttc.connect()
-print ("Conectado")
 
 #Loop until terminated
 while True:
+    #Declarando las variables
+    message ={
+    'ID': random.randint(0,10),
+    'Velocidad': random.randint(0,120),
+    'Fecha': str(dt.datetime.now()),
+    'Mensaje': "Evento "+srt(random.randint(100,500))
+    }
+    #decodificando el JSON
+    message = mqttc.json_encode(message)
     send()
     time.sleep(5)
 

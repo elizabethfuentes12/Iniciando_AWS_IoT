@@ -83,8 +83,44 @@ Ahora en el menú del lado izquierdo **Seguridad -> Certificados**, verá el cer
 
 ### Parte 2: Simular dispositivo con programa en python.
 
-Para esta parte debes descargar el siguiente programa [ejercicio1.py] en la misma carpeta donde tienes los certificados descargados y renombrados en la parte anterior. 
+En esta parte debes descargar el siguiente programa [ejercicio1.py](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/blob/master/ejercicio1.py) en la misma carpeta donde tienes los certificados descargados y renombrados en la parte anterior. 
 
+Para que el programa funcione debes modificar lo siguiente: 
+
+- Asegurate de tener configurada tus credenciales de acceso de la cuenta AWS. [Aca como lo puedes hacer](https://docs.aws.amazon.com/es_es/cli/latest/userguide/install-cliv2.html)
+
+- En AWS Iot Core vas al menu de abajo a la izquierda en **"Coniguración -> Punto de enlace"** y copias y pegas aca el link que aparece en la siguiente linea reemplazando a "data.iot.us-west-2.amazonaws.com":
+```
+mqttc.configureEndpoint("data.iot.us-west-2.amazonaws.com",8883)
+```
+- Debes asegurarte que el nombre de tus certificados tenga los nombres a continuación y además que esten en la misma carpeta. 
+
+```
+mqttc.configureCredentials("./rootCA.pem","./privateKey.pem","./certificate.pem")
+```
+Configura el ambiente para ver los datos antes de activar el programa: 
+
+Ve al menu de abajo a la izquierda **"Prueba"** y en Publicar especifica el mensaje que para nuestro caso de llama **"data"**, como lo puedes ver en e codigo. 
+
+```
+mqttc.publish("data", message, 0)
+```
+
+!["Configurar la prueba"](paso2.png)
+
+Finalizas dandole click a **"Suscribirse al tema"**
+
+Ahora ejecuta el programa 
+
+```
+python ejercicio1.py
+```
+
+y si todo esta OK podrias empezar a ver la información. 
+
+!["Resultado paso2"](paso2a.png)
+
+Para cancelar la ejecucion debes presionar **"ctrl + c"**
 
 
 
