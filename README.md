@@ -122,6 +122,9 @@ y si todo esta OK podrias empezar a ver la información.
 
 Para cancelar la ejecucion debes presionar **"ctrl + c"**
 
+---
+---
+
 ## Ejercicio 2: Enviar mensajes MQTT a AWS IoT Core desde NodeMCU ESP8266.
 
 En este ejercicio usaremos el mismo objeto creado en el paso anterior. 
@@ -137,6 +140,8 @@ En este ejercicio usaremos el mismo objeto creado en el paso anterior.
 
 Puedes conocer un poco mas de NodeMCU en su [Datasheet](hhttps://www.esploradores.com/datasheet-nodemcu/)
 
+---
+
 ### Parte 1: Convertir los certificados a DER. 
 
 Hay dos métodos principales para codificar los datos del certificado.
@@ -147,7 +152,7 @@ PEM = Codificación base64 del certificado codificado en DER, con líneas de enc
 
 DER: (Reglas de codificación distinguidas) es un subconjunto de la codificación BER que proporciona exactamente una forma de codificar un valor ASN.1. DER está diseñado para situaciones en las que se necesita una codificación única, como en la criptografía, y garantiza que una estructura de datos que debe firmarse digitalmente produzca una representación serializada única.
 
-PEM: (correo electrónico con privacidad mejorada) Simplemente un certificado DER codificado en US-ASCII por base64, solicitud de certificado o PKCS # 7, incluido entre delimitadores PEM típicos. es decir, “—– COMENZAR CERTIFICADO—–” y “—– FIN CERTIFICADO—–“. PEM es una abreviatura de Privacy Enhanced Mail (RFC 1421 - RFC 1424), uno de los primeros estándares para proteger el correo electrónico (IRTF, IETF). PEM nunca ha sido ampliamente adoptado como estándar de correo de Internet, pero se ha convertido en un estándar básico en x509 pki (también llamado pkix)
+PEM: (correo electrónico con privacidad mejorada) Simplemente un certificado DER codificado en US-ASCII por base64, solicitud de certificado o PKCS # 7, incluido entre delimitadores PEM típicos. es decir, “—– COMENZAR CERTIFICADO—–” and “—– FIN CERTIFICADO—–“. PEM es una abreviatura de Privacy Enhanced Mail (RFC 1421 - RFC 1424), uno de los primeros estándares para proteger el correo electrónico (IRTF, IETF). PEM nunca ha sido ampliamente adoptado como estándar de correo de Internet, pero se ha convertido en un estándar básico en x509 pki (también llamado pkix)
 
 Dado que nuestro ESP8266 no comprende la codificación base64, convertiremos ese certificado a binario DER. 
 
@@ -163,6 +168,8 @@ openssl x509 -in AmazonRootCA1.pem -out ca.der -outform DER
 Reemplaza el "xxxxxxxxxx" con el nombre de su certificado y AmazonRootCA1 seguirá siendo el mismo.
 
 Después de ejecutar estos comandos, puedes ver que los certificados se guardan en la misma carpeta con formato .der, copie estos archivos en formato DER en una carpeta llamada **data**.
+
+---
 
 ### Parte 2: Instalación de la herramienta para NodeMCU ESP8266 en Arduino IDE.
 
@@ -181,16 +188,24 @@ Ahora debemos cargar el complemento de Arduino ESP8266 que empaqueta los certifi
 
 Creditos de esta herramienta a: Hristo Gochkov.
 
+---
+
 ### Parte 3: Configuración en Arduino para el Objeto. 
+
+---
 
 ### Parte 4: Compilando y cargando el nuevo programa en NodeMCU ESP8266.
 
 
- Tutorial estraido de este [How to connect NodeMCU ESP8266 with AWS IoT Core using Arduino IDE & MQTT](https://electronicsinnovation.com/how-to-connect-nodemcu-esp8266-with-aws-iot-core-using-arduino-ide-mqtt/)
+ Tutorial estraido de [How to connect NodeMCU ESP8266 with AWS IoT Core using Arduino IDE & MQTT](https://electronicsinnovation.com/how-to-connect-nodemcu-esp8266-with-aws-iot-core-using-arduino-ide-mqtt/)
 
 
+---
+---
 
 ## Ejercicio 3: Manejo de mensajes IoT en AWS Cloud.
+
+---
 
 ### Parte 1: Crear una tabla DynamodDB con mensajes MQTT desde AWS IoT Core
 
@@ -202,9 +217,13 @@ Una vez creada la tabla vamos al servicio AWS IoT Core
 
 !["Crer vista_dynamodDB"](imagen/vista_dynamodDB.png)
 
-### Parte 2: Envio de notificaciones pre-configuradas por SMS y correo electronico. 
+---
 
-### Parte 3: Envio de notificaciones a CloudWatch
+### Parte 2: Envió de notificaciones preconfiguradas por SMS y correo electrónico. 
+
+---
+
+### Parte 3: Envió de notificaciones a AWs CloudWatch.
 
 
 
