@@ -6,7 +6,7 @@ En este repositorio vamos a aprender los primeros pasos para integrarnos a mundo
 Para conocer las ventajas y caracteristicas del mundo AWS IoT te inivito a visitar el siguiente link: [https://aws.amazon.com/es/iot/](https://aws.amazon.com/es/iot/)
 
 
-Este tutorial consiste en dos ejercicios uno usando python y otro usando un NodeMCU ESP8266, en ambos trabajaremos en el servicio AWS IoT Core. 
+Este tutorial consiste en tres ejercicios un primer ejercicio donde simularemos un dispositivo utilizando un programa simple en Python y otro usando un dispositivo real NodeMCU ESP8266, ambos para enviar mensajes a la nube AWS IoT Core, y en un tercero ejercicio cofiguraremos algunas acciones gatilladas con los mensajes enviados. 
 
 ---
 ---
@@ -23,13 +23,13 @@ AWS IoT Core es un servicio en la nube administrado que permite a los dispositiv
 ---
 ---
 
-## Ejercicio 1: 
+## Ejercicio 1: Enviar mensajes MQTT a AWS IoT Core desde Python. 
 
 En este ejercicio, vamos a configurar un objeto de IoT en AWS IoT Core; una vez que tenga esa configuración, ejecutaremos un pequeño programa para simular el envío de datos a AWS IoT Core y luego usará el cliente de prueba MQTT para ver la carga útil de cada mensaje MQTT.
 
 !["Ejericio 1"](imagen/ejercicio1.png)
 
-¿Que necesito?
+¿Que necesitas?
 
 - [x] Una cuenta AWS. [Crea tu cuenta con capa gratuita](https://aws.amazon.com/es/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc)
 - [x] Conocimientos en Python.
@@ -121,6 +121,35 @@ y si todo esta OK podrias empezar a ver la información.
 !["Resultado paso2"](imagen/paso2a.png)
 
 Para cancelar la ejecucion debes presionar **"ctrl + c"**
+
+## Ejercicio 2: Enviar mensajes MQTT a AWS IoT Core desde NodeMCU ESP8266.
+
+En este ejercicio usaremos el mismo objeto creado en el paso anterior. 
+
+!["Ejericio 2"](imagen/ejercicio1.png)
+
+¿Que necesitas?
+
+- [x] Una cuenta AWS. [Crea tu cuenta con capa gratuita](https://aws.amazon.com/es/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc)
+- [x] Un NodeMCU ESP8266. Disponible en cualquier tienda on-line [ejemplo](https://www.amazon.com/-/es/Internet-desarrollo-inalámbrico-funciona-Micropython/dp/B07R4MVSCY/ref=sr_1_6?__mk_es_US=ÅMÅŽÕÑ&dchild=1&keywords=NodeMCU+ESP8266&qid=1600307883&sr=8-6).
+- [x] Tener instalado en tu computador Arduino. [Link de descarga](https://www.arduino.cc/en/main/software)
+
+Puedes conocer un poco mas de NodeMCU en su [Datasheet](hhttps://www.esploradores.com/datasheet-nodemcu/)
+
+
+## Ejercicio 3: Manejo de mensajes IoT en AWS Cloud.
+
+### Parte 1: Crear una tabla DynamodDB con mensajes MQTT desde AWS IoT Core
+
+Primero que todo debemos crear una tabla en DynamondDB, para esto debemos ir al servicio con su nombre y darle click en **"Crear Tabla"**, para nuestro ejercicio la nombraremos **"iot-prueba"** para las Claves principales usaremos los datos que enviamos desde nuestro programa **ID** y **Fecha**.
+
+!["Crer Tabla DynamodDB"](imagen/crear_tabla.png)
+
+Una vez creada la tabla vamos al servicio AWS IoT Core 
+
+
+
+
 
 
 
