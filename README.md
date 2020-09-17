@@ -93,6 +93,8 @@ Para que el programa funcione debes modificar lo siguiente:
 ```
 mqttc.configureEndpoint("data.iot.us-west-2.amazonaws.com",8883)
 ```
+!["Configurar la prueba"](imagen/endpoint.png)
+
 - Debes asegurarte que el nombre de tus certificados tenga los nombres a continuación y además que esten en la misma carpeta. 
 
 ```
@@ -201,15 +203,47 @@ Ahora debemos cargar el complemento de Arduino ESP8266 que empaqueta los certifi
 
 !["Captura Tools"](imagen/herramienta.png)
 
-Creditos de esta herramienta a: Hristo Gochkov.
+### Creditos de esta herramienta a: Hristo Gochkov.
 
 ---
 
-### Parte 3: Configuración en Arduino para el Objeto. 
+### Parte 3: Modificar el código para el NodeMCU ESP8266 al servidor AWS IoT. 
+
+Para que el código funcione debes: 
+
+- Copia el codigo para arduino del siguiente [Link](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/blob/master/ejercicio2.py), este al igual que el anterir se se suscribe al tema **"data"** por lo que no es necesario modficar nada de lo anterior. 
+
+- Pega el codigo en una pestaña limpia de Arduino y modifica los siguietes parametros: 
+
+En estas lineas van los datos de WIFI necesarios para que el NodeMCU ESP8266 se pueda conectar y enviar la informacion al servidor AWS IoT
+```
+const char* ssid ="Electronics_Innovation";
+const char* password = "subscribe";
+```
+
+También debes cambiar el AWS_endpoint, como en el ejercicio 1,  que es la dirección del agente MQTT para su cuenta de AWS en una región específica.
+
+```
+const char* AWS_endpoint = "xxxxxxxxxxxxxx-ats.iot.us-west-2.amazonaws.com"; //MQTT broker ip
+```
+!["Configurar la prueba"](imagen/endpoint.png)
+
+- Asegúrese de que el nombre de los archivos en Sketch coincida con los nombres de sus certificados reales en la carpeta **dato**.
+
+```
+line no: 126> File cert = SPIFFS.open("/cert.der", "r"); //replace cert.crt eith your uploaded file name
+line no:141 > File private_key = SPIFFS.open("/private.der", "r"); //replace private eith your uploaded file name
+line no:158 > File ca = SPIFFS.open("/ca.der", "r"); //replace ca eith your uploaded file name
+```
 
 ---
 
-### Parte 4: Compilando y cargando el nuevo programa en NodeMCU ESP8266.
+### Parte 4.Descargando el certificado AWS certificates & codigo en tu NodeMCU ESP8266
+
+---
+### Parte 5: Compilando y cargando el nuevo programa en NodeMCU ESP8266.
+
+En esta parte vamos a enviar los mismos mensajes que enviamos en el ejercicio 1 pero desde nuestro dispositivo real.
 
 
  Tutorial estraido de [How to connect NodeMCU ESP8266 with AWS IoT Core using Arduino IDE & MQTT](https://electronicsinnovation.com/how-to-connect-nodemcu-esp8266-with-aws-iot-core-using-arduino-ide-mqtt/)

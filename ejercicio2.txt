@@ -18,12 +18,11 @@ It connects to AWS IoT server then:
 
 #include "FS.h"
 #include <ESP8266WiFi.h>
+#include <WiFiUdp.h>
 #include <PubSubClient.h>
 #include <NTPClient.h>
-#include <WiFiUdp.h>
 
-// Update these with values suitable for your network.
-
+// Actualiza los valores de tu WIFI.
 const char* ssid = "Electronics_Innovation";
 const char* password = "subscribe";
 
@@ -45,8 +44,15 @@ Serial.println();
 WiFiClientSecure espClient;
 PubSubClient client(AWS_endpoint, 8883, callback, espClient); //set MQTT port number to 8883 as per //standard
 long lastMsg = 0;
-char msg[50];
+char msg[150];
+char copy[150];
+String mensaje;
 int value = 0;
+long randomID;
+long randomTemp;
+String formattedDate;
+String dayStamp;
+String timeStamp;
 
 void setup_wifi() {
 
@@ -70,6 +76,7 @@ Serial.println("IP address: ");
 Serial.println(WiFi.localIP());
 
 timeClient.begin();
+
 while(!timeClient.update()){
 timeClient.forceUpdate();
 }
@@ -169,21 +176,46 @@ Serial.print("Heap: "); Serial.println(ESP.getFreeHeap());
 }
 
 void loop() {
-
+  
 if (!client.connected()) {
 reconnect();
 }
-client.loop();
+timeClient.setTimeOffset(-10800);
+// Para ajustar Diferencia horaria GMT/UTC:
+// GMT +1 = 3600
+// GMT +8 = 28800
+// GMT -1 = -3600
+// GMT 0 = 0
+// GMT -4 = -14400
+// GMT -3 = 10800
 
+client.loop();
 long now = millis();
 if (now - lastMsg > 2000) {
 lastMsg = now;
 ++value;
-snprintf (msg, 75, "{\"message\": \"hello world #%ld\"}", value);
-Serial.print("Publish message: ");
+randomID = random(0,10);
+randomTemp = random(0,120);
+
+timeClient.update();
+formattedDate = timeClient.getFormattedDate();
+int splitT = formattedDate.indexOf("T");
+dayStamp = formattedDate.substring(0, splitT);
+timeStamp = formattedDate.substring(splitT+1, formattedDate.length()-1);
+
+//Aca armamos el mensaje que vamos a enviar
+mensaje ="{\"ID\":"+String(randomID)+",\"Temperatura\":\""+String(randomTemp)+"\",\"Fecha\":\""+ String(dayStamp)+" "+String(timeStamp)+"\",\"Evento\":\""+String(value)+"\"}";
+
+//Se envia en caracteres por lo que debemos convertir el string en caracteres. 
+mensaje.toCharArray(copy, 150);
+
+//aca armamos a msg que es el que enviaremos a AWS Cloud. 
+snprintf (msg,150,copy);
+
+Serial.print("Mensaje enviado: ");
 Serial.println(msg);
-client.publish("data", msg);
-Serial.print("Heap: "); Serial.println(ESP.getFreeHeap()); //Low heap can cause problems
+client.publish("data", msg); //data es nuestro tema para filtrar en AWS IoT
+//Serial.print("Heap: "); Serial.println(ESP.getFreeHeap()); //Low heap can cause problems
 }
 digitalWrite(LED_BUILTIN, HIGH); // turn the LED on (HIGH is the voltage level)
 delay(100); // wait for a second

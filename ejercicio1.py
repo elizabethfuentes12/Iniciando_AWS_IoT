@@ -46,7 +46,7 @@ while True:
     #Declarando las variables
     message ={
     'ID': random.randint(0,10),
-    'Velocidad': random.randint(0,120),
+    'Temperatura': random.randint(0,120),
     'Fecha': str(dt.datetime.now()),
     'Mensaje': "Evento "+srt(random.randint(100,500))
     }
