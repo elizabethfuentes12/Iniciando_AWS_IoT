@@ -60,9 +60,9 @@ lo que ofrece la capacidad de grabar la clave privada en el dispositivo al momen
 
  Descargue el certificado y la clave privada para el dispositivo, y también el rootCA 1 . 
 
-- Modifica el nombre de tu certificado a **certificate.pem**
-- Modifica el nombre de tu private key a **privateKey.pem**
-- Modifica el nombre de tu rootCA 1 a **rootCA.pem**
+- Duplicar el archivo de certificado con el siguiente nombre **certificate.pem**
+- Duplicar el archivo de privateKey con el siguiente nombre  **privateKey.pem**
+- Duplicar el archivo de rootCA 1 con el siguiente nombre  **rootCA.pem**
 
  Asegúrese de presionar el botón de **"Activar"** para que se pueda usar el certificado. 
 
@@ -126,15 +126,60 @@ Para cancelar la ejecucion debes presionar **"ctrl + c"**
 
 En este ejercicio usaremos el mismo objeto creado en el paso anterior. 
 
-!["Ejericio 2"](imagen/ejercicio1.png)
+!["Ejericio 2"](imagen/ejercicio2.png)
 
 ¿Que necesitas?
 
 - [x] Una cuenta AWS. [Crea tu cuenta con capa gratuita](https://aws.amazon.com/es/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc)
 - [x] Un NodeMCU ESP8266. Disponible en cualquier tienda on-line [ejemplo](https://www.amazon.com/-/es/Internet-desarrollo-inalámbrico-funciona-Micropython/dp/B07R4MVSCY/ref=sr_1_6?__mk_es_US=ÅMÅŽÕÑ&dchild=1&keywords=NodeMCU+ESP8266&qid=1600307883&sr=8-6).
 - [x] Tener instalado en tu computador Arduino. [Link de descarga](https://www.arduino.cc/en/main/software)
+- [x] Tener instalado en tu computador OpenSSL. [Link de como hacerlo]()
 
 Puedes conocer un poco mas de NodeMCU en su [Datasheet](hhttps://www.esploradores.com/datasheet-nodemcu/)
+
+### Parte 1: Convertir los certificados a DER. 
+
+Hay dos métodos principales para codificar los datos del certificado.
+
+DER = codificación binaria para datos de certificado
+PEM = Codificación base64 del certificado codificado en DER, con líneas de encabezada y pie de página agregadas.
+
+
+DER: (Reglas de codificación distinguidas) es un subconjunto de la codificación BER que proporciona exactamente una forma de codificar un valor ASN.1. DER está diseñado para situaciones en las que se necesita una codificación única, como en la criptografía, y garantiza que una estructura de datos que debe firmarse digitalmente produzca una representación serializada única.
+
+PEM: (correo electrónico con privacidad mejorada) Simplemente un certificado DER codificado en US-ASCII por base64, solicitud de certificado o PKCS # 7, incluido entre delimitadores PEM típicos. es decir, “—– COMENZAR CERTIFICADO—–” y “—– FIN CERTIFICADO—–“. PEM es una abreviatura de Privacy Enhanced Mail (RFC 1421 - RFC 1424), uno de los primeros estándares para proteger el correo electrónico (IRTF, IETF). PEM nunca ha sido ampliamente adoptado como estándar de correo de Internet, pero se ha convertido en un estándar básico en x509 pki (también llamado pkix)
+
+Dado que nuestro ESP8266 no comprende la codificación base64, convertiremos ese certificado a binario DER. 
+
+Para continuar debes asegurarte que tengas instalado OpenSSL de no ser asi revisa como hacerlo en este [Link]()
+
+Una vez instalado OpenSSL, podremos usarlo para convertir nuestros certificados a DER usando los siguientes comandos en tu terminal: 
+
+```
+openssl x509 -in xxxxxxxxxx-certificate.pem.crt -out cert.der -outform DER 
+openssl rsa -in xxxxxxxxxx-private.pem.key -out private.der -outform DER
+openssl x509 -in AmazonRootCA1.pem -out ca.der -outform DER
+```
+Reemplaza el "xxxxxxxxxx" con el nombre de su certificado y AmazonRootCA1 seguirá siendo el mismo.
+
+Después de ejecutar estos comandos, puedes ver que los certificados se guardan en la misma carpeta con formato .der, copie estos archivos en formato DER en una carpeta llamada **data**.
+
+### Parte 2: Instalación de la herramienta para NodeMCU ESP8266 en Arduino IDE.
+
+Primero aregurate de tener instalado Arduino, de no ser asi [Link de descarga](https://www.arduino.cc/en/main/software). 
+
+Una vez te asegures de lo anterior debes revisar que Arduino tenga el complemento ESP8266 instalado. Si no sabes cómo instalar el complemento ESP8266,
+Mira este artículo: [NodeMCU programming with Arduino](https://electronicsinnovation.com/nodemcu-arduinoide/).
+
+
+
+### Parte 3: Configuración en Arduino para el Objeto. 
+
+### Parte 4: Compilando y cargando el nuevo programa en NodeMCU ESP8266.
+
+
+Tutorial estraido de este [Link](https://electronicsinnovation.com/how-to-connect-nodemcu-esp8266-with-aws-iot-core-using-arduino-ide-mqtt/)
+
 
 
 ## Ejercicio 3: Manejo de mensajes IoT en AWS Cloud.
