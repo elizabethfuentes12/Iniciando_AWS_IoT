@@ -186,8 +186,11 @@ Después de ejecutar estos comandos, puedes ver que los certificados se guardan 
 
 Primero aregurate de tener instalado Arduino, de no ser asi [Link de descarga](https://www.arduino.cc/en/main/software). 
 
-Una vez te asegures de lo anterior debes revisar que Arduino tenga el complemento ESP8266 instalado. Si no sabes cómo instalar el complemento ESP8266,
-Mira este artículo: [NodeMCU programming with Arduino](https://electronicsinnovation.com/nodemcu-arduinoide/).
+Una vez te asegures de lo anterior debes revisar que Arduino tenga el complemento ESP8266 instalado. Si no sabes cómo instalar el complemento ESP8266, puedes revisar estos dos link: 
+
+[Controlador NodeMCU ESP8266]()
+
+[NodeMCU programming with Arduino](https://electronicsinnovation.com/nodemcu-arduinoide/).
 
 Ahora debemos cargar el complemento de Arduino ESP8266 que empaqueta los certificados en carpeta de **data** en la imagen del sistema de archivos SPIFFS y carga la imagen en la memoria flash de nuestro ESP8266.
 
@@ -197,11 +200,15 @@ Ahora debemos cargar el complemento de Arduino ESP8266 que empaqueta los certifi
 
 !["Captura Tools"](imagen/captura_tools.png)
 
+Para que se pueda realizar la instalación debes asegurare que en preferencia este la carpeta raiz de donde se encuentra tu caprpeta tools para que pueda leer el .jar: 
+
+!["Captura Tools"](imagen/preferencias.png)
+
 
 - Reinicie Arduino IDE.
 - Seleccione "herramientas> Carga de datos de boceto ESP8266" estará allí.
 
-!["Captura Tools"](imagen/herramienta.png)
+!["Preferencias"](imagen/herramienta.png)
 
 ### Creditos de esta herramienta a: Hristo Gochkov.
 
@@ -211,7 +218,7 @@ Ahora debemos cargar el complemento de Arduino ESP8266 que empaqueta los certifi
 
 Para que el código funcione debes: 
 
-- Copia el codigo para arduino del siguiente [Link](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/blob/master/ejercicio2.py), este al igual que el anterir se se suscribe al tema **"data"** por lo que no es necesario modficar nada de lo anterior. 
+- Copia el codigo para arduino del siguiente [Link](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/blob/master/ejercicio2.txt), este al igual que el anterir se se suscribe al tema **"data"** por lo que no es necesario modficar nada de lo anterior. 
 
 - Pega el codigo en una pestaña limpia de Arduino y modifica los siguietes parametros: 
 
@@ -238,7 +245,13 @@ line no:158 > File ca = SPIFFS.open("/ca.der", "r"); //replace ca eith your uplo
 
 ---
 
-### Parte 4.Descargando el certificado AWS certificates & codigo en tu NodeMCU ESP8266
+### Parte 4.Descargando el certificado AWS en tu NodeMCU ESP8266.
+
+Debes asegurarte que la carpeta **data** que contiene los certificados este en la misma carpeta donde se encuentra tu codigo Arduino, como se muestra a continuación.
+
+!["Carpeta Data"](imagen/carpeta_data.png)
+
+
 
 ---
 ### Parte 5: Compilando y cargando el nuevo programa en NodeMCU ESP8266.
