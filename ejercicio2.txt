@@ -18,7 +18,7 @@ It connects to AWS IoT server then:
 
 #include "FS.h"
 #include <ESP8266WiFi.h>
-#include <WiFiUdp.h> //
+#include <WiFiUdp.h>
 #include <PubSubClient.h> // Si no la tienes descargala aca: https://www.arduinolibraries.info/libraries/pub-sub-client
 #include <NTPClient.h> // Si no la tienes descargala aca: https://www.arduinolibraries.info/libraries/ntp-client
 
@@ -27,8 +27,7 @@ String getFormattedDate(unsigned long secs = 0);
 
 de lo cotrario puedes copiar y pegar la libereria de 
 
-https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/tree/master/libreria
-
+https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/tree/master/libreria/NTPClient
 */
 
 // Actualiza los valores de tu WIFI.

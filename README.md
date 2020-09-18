@@ -188,11 +188,11 @@ Primero aregurate de tener instalado Arduino, de no ser asi [Link de descarga](h
 
 Una vez te asegures de lo anterior debes revisar que Arduino tenga el complemento ESP8266 instalado. Si no sabes cómo instalar el complemento ESP8266, puedes revisar estos dos link: 
 
-[Controlador NodeMCU ESP8266]()
+[Controlador NodeMCU ESP8266](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/blob/master/NodeMCU_ESP8266.md)
 
 [NodeMCU programming with Arduino](https://electronicsinnovation.com/nodemcu-arduinoide/).
 
-Ahora debemos cargar el complemento de Arduino ESP8266 que empaqueta los certificados en carpeta de **data** en la imagen del sistema de archivos SPIFFS y carga la imagen en la memoria flash de nuestro ESP8266.
+Ahora debemos cargar el complemento de Arduino ESP8266 que empaqueta los certificados en la carpeta de **data** en la memoria flash de nuestro ESP8266.
 
 - Descarga la herramienta para pasar los archivos a la memoria del ESP8266 **"ESP8266FS-0.4.0.zip"** [Git hub releases page](https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.5.0).
 
@@ -214,13 +214,22 @@ Para que se pueda realizar la instalación debes asegurare que en preferencia es
 
 ---
 
-### Parte 3: Modificar el código para el NodeMCU ESP8266 al servidor AWS IoT. 
+### Parte 3: Descargando el certificado AWS en tu NodeMCU ESP8266.
+
+Debes asegurarte que la carpeta **data** que contiene los certificados este en la misma carpeta donde se encuentra tu codigo Arduino, como se muestra a continuación.
+
+!["Carpeta Data"](imagen/carpeta_data.png)
+
+
+---
+
+### Parte 4: Modificar el código para el NodeMCU ESP8266 al servidor AWS IoT. 
 
 Para que el código funcione debes: 
 
 - Copia el codigo para arduino del siguiente [Link](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/blob/master/ejercicio2.txt), este al igual que el anterir se se suscribe al tema **"data"** por lo que no es necesario modficar nada de lo anterior. 
 
-- Pega el codigo en una pestaña limpia de Arduino y modifica los siguietes parametros: 
+- Pega el código en una pestaña limpia de Arduino y modifica los siguietes parametros: 
 
 En estas lineas van los datos de WIFI necesarios para que el NodeMCU ESP8266 se pueda conectar y enviar la informacion al servidor AWS IoT
 ```
@@ -235,32 +244,71 @@ const char* AWS_endpoint = "xxxxxxxxxxxxxx-ats.iot.us-west-2.amazonaws.com"; //M
 ```
 !["Configurar la prueba"](imagen/endpoint.png)
 
-- Asegúrese de que el nombre de los archivos en Sketch coincida con los nombres de sus certificados reales en la carpeta **dato**.
+- Asegúrese de que el nombre de los archivos coincida con los nombres de sus certificados reales en la carpeta **dato**.
 
 ```
 line no: 126> File cert = SPIFFS.open("/cert.der", "r"); //replace cert.crt eith your uploaded file name
 line no:141 > File private_key = SPIFFS.open("/private.der", "r"); //replace private eith your uploaded file name
 line no:158 > File ca = SPIFFS.open("/ca.der", "r"); //replace ca eith your uploaded file name
 ```
+- Debes tener instaladas las siguientes librerias: 
+```
+#include "FS.h"
+#include <ESP8266WiFi.h>
+#include <WiFiUdp.h>
+#include <PubSubClient.h>
+#include <NTPClient.h>
+```
+<PubSubClient.h> --> [Si no la tienes descargala aca](https://www.arduinolibraries.info/libraries/pub-sub-client)
 
----
+<NTPClient.h> --> [Si no la tienes descargala aca](https://www.arduinolibraries.info/libraries/ntp-client)
 
-### Parte 4.Descargando el certificado AWS en tu NodeMCU ESP8266.
+En el caso de compilar y te de error en **getFormattedDate** de NTPclient debes revisar que en **Arduino > libraries > NTPClient > NTPCliente.h** tenga la siguiente linea: 
 
-Debes asegurarte que la carpeta **data** que contiene los certificados este en la misma carpeta donde se encuentra tu codigo Arduino, como se muestra a continuación.
+```
+String getFormattedDate(unsigned long secs = 0);
+```
+De lo cotrario puedes copiar y pegar la libereria de: 
 
-!["Carpeta Data"](imagen/carpeta_data.png)
-
-
+[NTPClient](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/tree/master/libreria/NTPClient)
 
 ---
 ### Parte 5: Compilando y cargando el nuevo programa en NodeMCU ESP8266.
 
 En esta parte vamos a enviar los mismos mensajes que enviamos en el ejercicio 1 pero desde nuestro dispositivo real.
 
+- Conecta el NodeMCU ESP8266 al computador y asegurate que lo tome en el puerto adeduado: 
+
+!["Crer Tabla DynamodDB"](imagen/puerto.png)
+
+- Configura los siguientes parametros en Herramientas:
+
+**Upload Speed: "115200"**
+
+**Flash Size: "4MB"**
+
+!["Crer Tabla DynamodDB"](imagen/configuracion_herramientas.png)
+
+
+- Abre el código Arduino y seleccione el elemento de menú **Herramientas> ESP8266 Sketch Data Upload**. Esto debería comenzar a cargar los archivos en el la flash del ESP8266. Cuando termine, la barra de estado IDE mostrará el mensaje SPIFFS Image Uploaded. Puede que tarde unos minutos en sistemas.
+
+- Compila el programa y si todo esta correcto subelo a tu NodeMCU ESP8266. 
+
+- Ahora seremos capaces de ver los datos enviados en AWS IoT Core como lo hicimos en el ejercicio anterior. 
+
+Ve al menu de abajo a la izquierda **"Prueba"** y en Publicar especifica el mensaje que para nuestro caso de llama **"data"**, como lo puedes ver en e codigo. 
+
+```
+client.publish("data", msg);
+```
+
+!["Configurar la prueba"](imagen/paso2.png)
+
+Finalizas dandole click a **"Suscribirse al tema"**
+
+!["Configurar la prueba"](imagen/desde_node.png)
 
  Tutorial estraido de [How to connect NodeMCU ESP8266 with AWS IoT Core using Arduino IDE & MQTT](https://electronicsinnovation.com/how-to-connect-nodemcu-esp8266-with-aws-iot-core-using-arduino-ide-mqtt/)
-
 
 ---
 ---
