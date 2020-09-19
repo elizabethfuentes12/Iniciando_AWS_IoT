@@ -60,6 +60,8 @@ lo que ofrece la capacidad de grabar la clave privada en el dispositivo al momen
 
  Descargue el certificado y la clave privada para el dispositivo, y también el rootCA 1 . 
 
+!["Descargar CA 1"](imagen/paso1b.png)
+
 - Duplicar el archivo de certificado con el siguiente nombre **certificate.pem**
 - Duplicar el archivo de privateKey con el siguiente nombre  **privateKey.pem**
 - Duplicar el archivo de rootCA 1 con el siguiente nombre  **rootCA.pem**
@@ -67,15 +69,13 @@ lo que ofrece la capacidad de grabar la clave privada en el dispositivo al momen
  Asegúrese de presionar el botón de **"Activar"** para que se pueda usar el certificado. 
 
 
- !["Descargar CA 1"](imagen/paso1b.png)
-
 Finalice el proceso haciendo clic en el botón **"Listo"**. 
 
 El siguiente punto es crear y adjuntar una política al certificado, que autorice al dispositivo autenticado a realizar acciones de IoT en los recursos de IoT.
 
 Para crear la politica debes ir al menú del lado izquierdo **Seguridad -> Políticas** una vez ahí debes darle Click a **"Crear una Política"**, para efectos de este ejercicio la nombreremos **objeto1-policity**, complete los campos (Acción, ARN de recurso) con una estrella **"*"**, esto solo para efectos de este ejerccio ya que permite todo, y marque la opción Permitir efecto y luego presione el botón **"Crear"**.
 
-Ahora en el menú del lado izquierdo **Seguridad -> Certificados**, verá el certificado que ha creado anteriormente, toque los tres puntos de la derecha y elija **Asociar política**, aparecerá una ventana emergente que muestra sus políticas existentes, verifique las recientes política que haya creado y asocie.
+Ahora en el menú del lado izquierdo **Seguridad -> Certificados**, verá el certificado que ha creado anteriormente, toque los tres puntos de la derecha y elija **Asociar política**, aparecerá una ventana emergente que muestra sus políticas existentes, verifique las recientes política que haya creado y asocie, finaliza activiando.
 
 **¡¡Esto es todo Felicidades!! ya has creado tu primer objeto de AWS IoT con éxito, le has generado un certificado y le has adjuntado una política.**
 
@@ -309,6 +309,11 @@ Finalizas dandole click a **"Suscribirse al tema"**
 !["Configurar la prueba"](imagen/desde_node.png)
 
  Tutorial estraido de [How to connect NodeMCU ESP8266 with AWS IoT Core using Arduino IDE & MQTT](https://electronicsinnovation.com/how-to-connect-nodemcu-esp8266-with-aws-iot-core-using-arduino-ide-mqtt/)
+
+Tambien puedes ver la informacion enviada en Arduino desde **Monitor Serie** como se muestra en la imagen a continuación: 
+
+!["Configurar la prueba"](imagen/monitor_serie.png)
+
 
 ---
 ---

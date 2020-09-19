@@ -1,7 +1,10 @@
 *.pem
+*.der
 *.drawio
 .DS_Store
 ejercicio1_eli.py
 .gitignore
 ejercicio2_eli.txt
 */arduino
+*/ejercicio2_eli
+*/ejercicio2_eli.ino

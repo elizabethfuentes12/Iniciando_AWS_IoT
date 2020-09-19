@@ -8,7 +8,7 @@ import ssl
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 import json
 import time
-import datetime as dt
+from datetime import datetime
 import random
 
 
@@ -43,11 +43,12 @@ print ("Conectado")
 
 #Loop until terminated
 while True:
+    now = datetime.now()
     #Declarando las variables
     message ={
     'ID': str(random.randint(0,10)),
     'Temperatura': random.randint(0,120),
-    'Fecha': str(dt.datetime.now()),
+    'Fecha': str(now.strftime("%Y-%m-%d %H:%M:%S")),
     'Evento': str(random.randint(100,500))
     }
     #decodificando el JSON
