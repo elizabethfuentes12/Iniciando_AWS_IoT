@@ -50,9 +50,8 @@ En el siguiente menú seleccionar Click a **"Crear solo un objeto"**
 Para este ejercicio le colocaremos el nombre de **objeto1** y le damos Click a **"Siguiente"**
 
 En el siguiente paso debes darle Click a **"Crear Certificado"**
- 
 
-Un certificado X.509 individual por dispositivo es la forma recomendada de interactuar con los servicios de AWS IoT desde los dispositivos, 
+El certificado en unico por objeto es la forma recomendada de interactuar con los servicios de AWS IoT desde los dispositivos, 
 lo que ofrece la capacidad de grabar la clave privada en el dispositivo al momento de la inscripción que luego nunca se transfiere a través de Internet junto con las solicitudes, una ventaja de seguridad. 
 
 
@@ -368,7 +367,9 @@ Ahora envia los datos y podras observar como la tabla de DynamoDB creada se empi
 
 ---
 
-### Parte 2: Envió de notificaciones preconfiguradas por SMS y correo electrónico. 
+### Parte 2: Envió de notificaciones por SMS y correo electrónico.
+
+Para
 
 ---
 
