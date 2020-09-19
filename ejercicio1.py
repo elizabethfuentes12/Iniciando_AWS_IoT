@@ -37,18 +37,18 @@ def send():
     mqttc.publish("data", message, 0)
     print ("Mensaje Publicado")
     #conectando al gateway
-    mqttc.connect()
-    print ("Conectado")
+mqttc.connect()
+print ("Conectado")
 
 
 #Loop until terminated
 while True:
     #Declarando las variables
     message ={
-    'ID': random.randint(0,10),
+    'ID': str(random.randint(0,10)),
     'Temperatura': random.randint(0,120),
     'Fecha': str(dt.datetime.now()),
-    'Mensaje': "Evento "+srt(random.randint(100,500))
+    'Evento': str(random.randint(100,500))
     }
     #decodificando el JSON
     message = mqttc.json_encode(message)

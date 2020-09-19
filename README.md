@@ -296,7 +296,7 @@ En esta parte vamos a enviar los mismos mensajes que enviamos en el ejercicio 1 
 
 - Ahora seremos capaces de ver los datos enviados en AWS IoT Core como lo hicimos en el ejercicio anterior. 
 
-Ve al menu de abajo a la izquierda **"Prueba"** y en Publicar especifica el mensaje que para nuestro caso de llama **"data"**, como lo puedes ver en e codigo. 
+En el servicio de AWS IoT Core ve al menu de abajo a la izquierda **"Prueba"** y en Publicar especifica el mensaje que para nuestro caso de llama **"data"**, como lo puedes ver en e codigo. 
 
 ```
 client.publish("data", msg);
@@ -317,13 +317,47 @@ Finalizas dandole click a **"Suscribirse al tema"**
 
 ---
 
-### Parte 1: Crear una tabla DynamodDB con mensajes MQTT desde AWS IoT Core
+### Parte 1: Crear una tabla DynamoDB con mensajes MQTT desde AWS IoT Core
 
-Primero que todo debemos crear una tabla en DynamondDB, para esto debemos ir al servicio con su nombre y darle click en **"Crear Tabla"**, para nuestro ejercicio la nombraremos **"iot-prueba"** para las Claves principales usaremos los datos que enviamos desde nuestro programa **ID** y **Fecha**.
+Primero que todo debemos crear una tabla en DynamoDB en la cual escriberemos los datos, para esto debemos ir al servicio con su nombre y darle click en **"Crear Tabla"**, para nuestro ejercicio la nombraremos **"iot-prueba"** para las Claves principales usaremos los datos que enviamos desde nuestro programa **ID** y **Fecha**.
 
-!["Crer Tabla DynamodDB"](imagen/crear_tabla.png)
+!["Crer Tabla DynamoDB"](imagen/crear_tabla.png)
 
-Una vez creada la tabla vamos al servicio AWS IoT Core 
+Asegurate que el contenido que envies sea "Cadena" = String al igual que la información en el json que envias de lo contrario no veras los datos en la dynamondDB.
+
+Ahora debes crear la regla en AWS IoT Core, para eso ve al meno de abajo a la izquierda **Acto --> Regla** y dale al botón **Crear una Regla**
+
+
+!["Crer Tabla DynamoDB"](imagen/crear_regla.png)
+
+Debes llenar los campos: 
+- Nombre: para nuestro ejercicio se llamara iotDynamoDB
+- Descripción, no es un campo obligatorio pero es recomendable para que sepas que hace la regla. 
+- Instrucción de consulta de regla, debes modificar la query a: 
+```
+SELECT * FROM 'data'
+```
+!["Crer Tabla DynamoDB"](imagen/crear_regla2.png)
+
+Paso siguiente en **Definir una o varias acciones**, le das al boto **Añadir Accion**, y seleccionas la segunda opcion corresponiente a DynamoDB.
+
+!["Crer Tabla DynamodDB"](imagen/definir_accion.png)
+
+A continuacion debes configurar la accion y crearle un rol, en nombre de tabla selecciona la que creamos anteriormente y en rol selecciona **"Crear un rol"**. 
+
+!["Crer Tabla DynamodDB"](imagen/configura_accion_tabla.png)
+
+Nombre el rol y continua con **"Crear un rol"**
+
+!["Crer Tabla DynamodDB"](imagen/iot_rol.png)
+
+Finaliza con **Crear accion** y luego con **Crear Regla**
+
+Una vez lista dale a los tres botones de la derecha --> **Habilitar**
+
+!["Crer Tabla DynamodDB"](imagen/habilitar.png)
+
+Ahora envia los datos y podras observar como la tabla de DynamoDB creada se empieza a llenar con los datos de tu objeto IoT.
 
 !["Crer vista_dynamodDB"](imagen/vista_dynamodDB.png)
 
@@ -333,7 +367,7 @@ Una vez creada la tabla vamos al servicio AWS IoT Core
 
 ---
 
-### Parte 3: Envió de notificaciones a AWs CloudWatch.
+### Parte 3: Envió de notificaciones a AWS CloudWatch.
 
 
 
