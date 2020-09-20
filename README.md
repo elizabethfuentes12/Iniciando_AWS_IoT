@@ -409,7 +409,7 @@ Creas la regla como se muestra en la imagen a continuación
 Y al igual que el erjecicio anterior modificamos la Query pero esta vez como se muestra a continuación: 
 
 ```
-SELECT "Alerta: Temperatura mayor a 40 grados" as msg FROM 'data' where value > 40
+SELECT "Alerta: Temperatura mayor a 40 grados" as msg FROM 'data' where Temperatura > 40
 ```
 Añadimos acción y seleccionamos:
 
@@ -429,7 +429,7 @@ No olvides habilitar la regla.
 
 !["Regla"](imagen/habilitar2.png)
 
-
+y envia tus notificaciones!! 
 
 ---
 
