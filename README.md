@@ -369,7 +369,67 @@ Ahora envia los datos y podras observar como la tabla de DynamoDB creada se empi
 
 ### Parte 2: Envió de notificaciones por SMS y correo electrónico.
 
-Para
+Para el envio de notificaciones usaremos el servicio [AWS SNS](https://aws.amazon.com/es/sns/?whats-new-cards.sort-by=item.additionalFields.postDateTime&whats-new-cards.sort-order=desc). 
+
+
+Para iniciar debemos crear un tema en AWS SNS
+
+!["Crer vista_dynamodDB"](imagen/sns_1.png)
+
+Lo nombras como quieras en mi caso lo deje como **SNSAlerta** y luego **Crear Tema**. 
+
+A continuación dale click a **Crear una subcripción**, aca indicaremos el protocolo que enviara la notificación. 
+
+Para el caso de SMS seleccionamos en protocolo SMS y agregas el numero al cual quieres que le lleguen las notificaciones y finalizas con **Crear Subscripción**:
+
+!["Crer vista_dynamodDB"](imagen/sns_sms.png)
+
+Ahora vamos a crear una cola en SQS, esto para asegurar que no se nos quede ninguna notificación por fuera. 
+
+Vamos al servicio [AWS SQS](https://aws.amazon.com/es/sqs/) y Creamos una cola. 
+
+!["sqs"](imagen/sqs_1.png)
+
+La nombras como **"ColaAlertaIot"** y para efecto de este ejercicio dejas el resto como esta y avanzas con **"Crear Cola"**. 
+
+Subcribimos la cola al tema Amazon SNS
+
+!["sqs"](imagen/sqs_2.png)
+
+Y seleccionas el tema creado anteriormente
+
+!["sqs"](imagen/sqs_3.png)
+
+De vuelta a AWS IoT Core vamos al meno de abajo a la izquierda **Actuar --> Reglas --> Crear**
+
+Creas la regla como se muestra en la imagen a continuación
+
+!["Regla"](imagen/regla_sns.png)
+
+Y al igual que el erjecicio anterior modificamos la Query pero esta vez como se muestra a continuación: 
+
+```
+SELECT "Alerta: Temperatura mayor a 40 grados" as msg FROM 'data' where value > 40
+```
+Añadimos acción y seleccionamos:
+
+!["Regla"](imagen/regla_sns2.png)
+
+Configuramos la acción y en formato de mensaje seleccionamos RAW: 
+
+!["Regla"](imagen/sns_accion.png)
+
+Como en el ejercicio anterior debemos crear el Rol
+
+!["Regla"](imagen/accion_sns_2.png)
+
+Y finalizamos con **Añadir Accion --> Crear Regla**
+
+No olvides habilitar la regla. 
+
+!["Regla"](imagen/habilitar2.png)
+
+
 
 ---
 

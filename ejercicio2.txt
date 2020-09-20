@@ -203,7 +203,7 @@ if (now - lastMsg > 2000) {
 lastMsg = now;
 ++value;
 randomID = random(0,10);
-randomTemp = random(0,120);
+randomTemp = random(30,50);
 
 timeClient.update();
 formattedDate = timeClient.getFormattedDate();

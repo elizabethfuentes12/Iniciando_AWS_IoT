@@ -47,12 +47,13 @@ while True:
     #Declarando las variables
     message ={
     'ID': str(random.randint(0,10)),
-    'Temperatura': random.randint(0,120),
+    'Temperatura': random.randint(30,50),
     'Fecha': str(now.strftime("%Y-%m-%d %H:%M:%S")),
     'Evento': str(random.randint(100,500))
     }
     #decodificando el JSON
     message = mqttc.json_encode(message)
+    print(message)
     send()
     time.sleep(5)
 
