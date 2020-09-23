@@ -15,7 +15,10 @@ Si su distribución se basa en APT en lugar de YUM, puede usar el siguiente coma
 ```
 $ apt-get install openssl
 ```
+## OpenSSL on MAC
 
+Revisa este [link](https://medium.com/@katopz/how-to-upgrade-openssl-8d005554401
+)
 ## OpenSSL on Windows
 
 Si está utilizando Windows, puede instalar una de las muchas implementaciones de código abierto de OpenSSL: la que podemos recomendar es Win32 OpenSSL de Shining Light Production, disponible como versión ligera o completa, ambas compiladas en x86 (32 bits) y Modos x64 (64 bits). Puede instalar cualquiera de estas versiones, siempre que su sistema las admita.

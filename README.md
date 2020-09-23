@@ -1,4 +1,5 @@
 # Iniciando AWS IoT
+# Conectando NodeMCU con AWS IoT
 
 En este repositorio vamos a aprender los primeros pasos para integrarnos a mundo de AWS IoT. 
 
@@ -6,7 +7,7 @@ En este repositorio vamos a aprender los primeros pasos para integrarnos a mundo
 Para conocer las ventajas y caracteristicas del mundo AWS IoT te inivito a visitar el siguiente link: [https://aws.amazon.com/es/iot/](https://aws.amazon.com/es/iot/)
 
 
-Este tutorial consiste en tres ejercicios un primer ejercicio donde simularemos un dispositivo utilizando un programa simple en Python y otro usando un dispositivo real NodeMCU ESP8266, ambos para enviar mensajes a la nube AWS IoT Core, y en un tercero ejercicio cofiguraremos algunas acciones gatilladas con los mensajes enviados. 
+Este tutorial consiste en tres ejercicios, un primer ejercicio donde simularemos un dispositivo utilizando un programa simple en Python y otro usando un dispositivo real NodeMCU ESP8266, ambos para enviar mensajes a la nube AWS IoT Core, y en el ultimo ejercicio cofiguraremos algunas acciones en AWS IoT gatilladas con los mensajes enviados. 
 
 ---
 ---
@@ -51,8 +52,7 @@ Para este ejercicio le colocaremos el nombre de **objeto1** y le damos Click a *
 
 En el siguiente paso debes darle Click a **"Crear Certificado"**
 
-El certificado en unico por objeto es la forma recomendada de interactuar con los servicios de AWS IoT desde los dispositivos, 
-lo que ofrece la capacidad de grabar la clave privada en el dispositivo al momento de la inscripción que luego nunca se transfiere a través de Internet junto con las solicitudes, una ventaja de seguridad. 
+El certificado es único por objeto y es la forma segura de interactuar con los servicios de AWS IoT desde los dispositivos, esta debe ser grabada como una clave privada en la memoria de los dispositivos al momento de su programación para que nunca se transfiera a través de Internet junto con las solicitudes, lo que significa una gran ventaja de seguridad.
 
 
  !["Descargar Certificados"](imagen/paso1a.png)
@@ -61,47 +61,57 @@ lo que ofrece la capacidad de grabar la clave privada en el dispositivo al momen
 
 !["Descargar CA 1"](imagen/paso1b.png)
 
-- Duplicar el archivo de certificado con el siguiente nombre **certificate.pem**
-- Duplicar el archivo de privateKey con el siguiente nombre  **privateKey.pem**
-- Duplicar el archivo de rootCA 1 con el siguiente nombre  **rootCA.pem**
+- Duplica el archivo de certificado con el siguiente nombre **certificate.pem**
+- Duplica el archivo de privateKey con el siguiente nombre **privateKey.pem**
+- Duplica el archivo de rootCA 1 con el siguiente nombre **rootCA.pem**
 
- Asegúrese de presionar el botón de **"Activar"** para que se pueda usar el certificado. 
+ Asegurate de presionar el botón de **"Activar"** para que se pueda usar el certificado. 
 
 
-Finalice el proceso haciendo clic en el botón **"Listo"**. 
+Finaliza el proceso haciendo clic en el botón **"Listo"**. 
 
-El siguiente punto es crear y adjuntar una política al certificado, que autorice al dispositivo autenticado a realizar acciones de IoT en los recursos de IoT.
+El siguiente punto es crear y adjuntar una política al certificado, que autorice al dispositivo autenticado a realizar acciones de IoT en los recursos de AWS IoT.
 
-Para crear la politica debes ir al menú del lado izquierdo **Seguridad -> Políticas** una vez ahí debes darle Click a **"Crear una Política"**, para efectos de este ejercicio la nombreremos **objeto1-policity**, complete los campos (Acción, ARN de recurso) con una estrella **"*"**, esto solo para efectos de este ejerccio ya que permite todo, y marque la opción Permitir efecto y luego presione el botón **"Crear"**.
+Para crear la política debes ir al menú del lado izquierdo **Seguridad -> Políticas** una vez ahí debes darle Click a **"Crear una Política"**, para efectos de este ejercicio la nombráremos **objeto1-policity**, completa los campos (Acción, ARN de recurso) con un asterisco **"*"**, esto solo para efectos de este ejercicio, debido a que permite todo, marque la opción Permitir efecto y luego presione el botón **"Crear"**. 
 
-Ahora en el menú del lado izquierdo **Seguridad -> Certificados**, verá el certificado que ha creado anteriormente, toque los tres puntos de la derecha y elija **Asociar política**, aparecerá una ventana emergente que muestra sus políticas existentes, verifique las recientes política que haya creado y asocie, finaliza activiando.
+**Nota:** Para un desarrollo en producción real, utilice la definición de política que brinde el mínimo permiso necesario para el funcionamiento del dispositivo (más información: [https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege))
+
+Ahora en el menú del lado izquierdo **Seguridad > Certificados**, verás el certificado que se creó anteriormente, toque los tres puntos de la derecha y elija **Asociar política**, aparecerá una ventana emergente que muestra sus políticas existentes, selecciona la política creada recientemente y asocia, finaliza el proceso con **”Activar”**. 
 
 **¡¡Esto es todo Felicidades!! ya has creado tu primer objeto de AWS IoT con éxito, le has generado un certificado y le has adjuntado una política.**
 
 ---
 
-### Parte 2: Simular dispositivo con programa en python.
+### Parte 2: Simular un dispositivo con un programa en python.
 
-En esta parte debes descargar el siguiente programa [ejercicio1.py](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/blob/master/ejercicio1.py) en la misma carpeta donde tienes los certificados descargados y renombrados en la parte anterior. 
+El programa para eete ejercicio esta en [ejercicio1.py](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/blob/master/ejercicio1.py), en la misma carpeta donde dejes el programa deben estar los archivos que renombramos en la parte anterior. 
+
+!["Configurar la prueba"](imagen/ejercicio1_2.png)
 
 Para que el programa funcione debes modificar lo siguiente: 
 
-- Asegurate de tener configurada tus credenciales de acceso de la cuenta AWS. [Aca como lo puedes hacer](https://docs.aws.amazon.com/es_es/cli/latest/userguide/install-cliv2.html)
+- [x] Asegurate de tener configurada tus credenciales de acceso de la cuenta AWS en tu computador. [Aca como lo puedes hacer](https://docs.aws.amazon.com/es_es/cli/latest/userguide/install-cliv2.html)
 
-- En AWS Iot Core vas al menu de abajo a la izquierda en **"Coniguración -> Punto de enlace"** y copias y pegas aca el link que aparece en la siguiente linea reemplazando a "data.iot.us-west-2.amazonaws.com":
+- [x] Tener instalada la libreria AWSIoTPythonSDK:
+```
+pip install AWSIoTPythonSDK
+```
+
+- [x] En AWS Iot Core ve al menu de abajo a la izquierda **"Coniguración -> Punto de enlace"** y copias y pegas aca el link que aparece en la siguiente linea reemplazando a "data.iot.us-west-2.amazonaws.com":
 ```
 mqttc.configureEndpoint("data.iot.us-west-2.amazonaws.com",8883)
 ```
 !["Configurar la prueba"](imagen/endpoint.png)
 
-- Debes asegurarte que el nombre de tus certificados tenga los nombres a continuación y además que esten en la misma carpeta. 
+- [x] Debes asegurarte de que el nombre de tus certificados tenga los nombres de la siguiente línea a continuación y además que estén en la misma carpeta.  
 
 ```
 mqttc.configureCredentials("./rootCA.pem","./privateKey.pem","./certificate.pem")
 ```
-Configura el ambiente para ver los datos antes de activar el programa: 
 
-Ve al menu de abajo a la izquierda **"Prueba"** y en Publicar especifica el mensaje que para nuestro caso de llama **"data"**, como lo puedes ver en e codigo. 
+Configura el ambiente de AWS IoT para ver los datos antes de activar el programa: 
+
+Ve al menú de abajo a la izquierda **"Prueba"** y en **Publicar** especifica el mensaje, para nuestro caso de llama **"data"**, como en el código a continuación:
 
 ```
 mqttc.publish("data", message, 0)
@@ -109,7 +119,7 @@ mqttc.publish("data", message, 0)
 
 !["Configurar la prueba"](imagen/paso2.png)
 
-Finalizas dandole click a **"Suscribirse al tema"**
+Finalizas dando click a **"Suscribirse al tema"**
 
 Ahora ejecuta el programa 
 
@@ -117,7 +127,7 @@ Ahora ejecuta el programa
 python ejercicio1.py
 ```
 
-y si todo esta OK podrias empezar a ver la información. 
+y si todo esta OK podrias empezar a ver los mensjes enviados:
 
 !["Resultado paso2"](imagen/paso2a.png)
 
@@ -128,7 +138,7 @@ Para cancelar la ejecucion debes presionar **"ctrl + c"**
 
 ## Ejercicio 2: Enviar mensajes MQTT a AWS IoT Core desde NodeMCU ESP8266.
 
-En este ejercicio usaremos el mismo objeto creado en el paso anterior. 
+En este ejercicio usaremos el mismo objeto creado en el paso anterior para enviar mensajes desde un NodeMCU ESP8266 a AWS IoT Core. 
 
 !["Ejericio 2"](imagen/ejercicio2.png)
 
@@ -147,17 +157,18 @@ Puedes conocer un poco mas de NodeMCU en su [Datasheet](hhttps://www.esploradore
 
 Hay dos métodos principales para codificar los datos del certificado.
 
-DER = codificación binaria para datos de certificado
-PEM = Codificación base64 del certificado codificado en DER, con líneas de encabezada y pie de página agregadas.
+**DER** = Codificación binaria para datos de certificado.
+**PEM** = Codificación base64 del certificado codificado en DER, con líneas de encabezado y pie de página agregadas.
 
 
-DER: (Reglas de codificación distinguidas) es un subconjunto de la codificación BER que proporciona exactamente una forma de codificar un valor ASN.1. DER está diseñado para situaciones en las que se necesita una codificación única, como en la criptografía, y garantiza que una estructura de datos que debe firmarse digitalmente produzca una representación serializada única.
+**DER**: ("Distinguished Encoding Rules" - Reglas de codificación distinguidas) es un subconjunto de la codificación BER que proporciona exactamente una forma de codificar un valor ASN.1. DER está diseñado para situaciones en las que se necesita una codificación única, como en la criptografía, y garantiza que una estructura de datos que debe firmarse digitalmente produzca una representación serializada única.
 
-PEM: (correo electrónico con privacidad mejorada) Simplemente un certificado DER codificado en US-ASCII por base64, solicitud de certificado o PKCS # 7, incluido entre delimitadores PEM típicos. es decir, “—– COMENZAR CERTIFICADO—–” and “—– FIN CERTIFICADO—–“. PEM es una abreviatura de Privacy Enhanced Mail (RFC 1421 - RFC 1424), uno de los primeros estándares para proteger el correo electrónico (IRTF, IETF). PEM nunca ha sido ampliamente adoptado como estándar de correo de Internet, pero se ha convertido en un estándar básico en x509 pki (también llamado pkix)
+**PEM**: (“Privacy Enhanced Mail” - correo electrónico con privacidad mejorada) Es uno de los primeros estándares para proteger el correo electrónico (IRTF, IETF). No es mas que un certificado DER codificado en US-ASCII por base64, solicitud de certificado o PKCS # 7, incluido entre delimitadores PEM típicos, es decir, “—– BEGIN CERTIFICATE—–” and “—– END CERTIFICATE—–“. PEM nunca ha sido ampliamente adoptado como estándar de correo de Internet, pero se ha convertido en un estándar básico en x509 pki (también llamado pkix)
 
-Dado que nuestro ESP8266 no comprende la codificación base64, convertiremos ese certificado a binario DER. 
+Dado que nuestro ESP8266 no comprende la codificación base64, convertiremos los certificados a binario DER. 
 
-Para continuar debes asegurarte que tengas instalado OpenSSL, pare evisar escrive en tu linea de comando:
+Para continuar debes asegurarte de que tengas instalado OpenSSL, para revisar escribe en tu línea de comando:  
+
 
 ```
 openssl
@@ -166,7 +177,7 @@ Si la respuesta es:
 ```
 OpenSSL>
 ```
-Entonces lo tienes instalado y puedes seguir avanzando, de lo contrario revisa como hacerlo en este [Link](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/blob/master/instalarOpenSSL.md)
+Entonces esta instalado y continúa avanzando, de lo contrario revisa como hacerlo en este [Link](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/blob/master/instalarOpenSSL.md)
 
 Una vez instalado OpenSSL, podremos usarlo para convertir nuestros certificados a DER usando los siguientes comandos en tu terminal: 
 
@@ -175,37 +186,37 @@ openssl x509 -in xxxxxxxxxx-certificate.pem.crt -out cert.der -outform DER
 openssl rsa -in xxxxxxxxxx-private.pem.key -out private.der -outform DER
 openssl x509 -in AmazonRootCA1.pem -out ca.der -outform DER
 ```
-Reemplaza el "xxxxxxxxxx" con el nombre de su certificado y AmazonRootCA1 seguirá siendo el mismo.
+Reemplaza el "xxxxxxxxxx" con el nombre de tu certificado y AmazonRootCA1 seguirá siendo el mismo si se llama igual de lo contrario debes modificarlo.
 
-Después de ejecutar estos comandos, puedes ver que los certificados se guardan en la misma carpeta con formato .der, copie estos archivos en formato DER en una carpeta llamada **data**.
+Después de ejecutar estos comandos, observa que los certificados se guardan en la misma carpeta con formato .der, copia estos archivos en formato DER en una carpeta que debes llamar **data**.
 
 ---
 
 ### Parte 2: Instalación de la herramienta para NodeMCU ESP8266 en Arduino IDE.
 
-Primero aregurate de tener instalado Arduino, de no ser asi [Link de descarga](https://www.arduino.cc/en/main/software). 
+- Primero aregurate de tener instalado Arduino, de no ser asi [Link de descarga](https://www.arduino.cc/en/main/software). 
 
-Una vez te asegures de lo anterior debes revisar que Arduino tenga el complemento ESP8266 instalado. Si no sabes cómo instalar el complemento ESP8266, puedes revisar estos dos link: 
+- Una vez te asegures de lo anterior debes revisar que tu Arduino tenga el complemento ESP8266 instalado. Si no lo tienes puedes revisar estos dos link para ver como se instala: 
 
 [Controlador NodeMCU ESP8266](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/blob/master/NodeMCU_ESP8266.md)
 
 [NodeMCU programming with Arduino](https://electronicsinnovation.com/nodemcu-arduinoide/).
 
-Ahora debemos cargar el complemento de Arduino ESP8266 que empaqueta los certificados en la carpeta de **data** en la memoria flash de nuestro ESP8266.
+- Ahora debemos cargar en Arduino el complemento de ESP8266  que empaqueta los certificados de la carpeta de **data** en la memoria flash de nuestro ESP8266: 
 
-- Descarga la herramienta para pasar los archivos a la memoria del ESP8266 **"ESP8266FS-0.4.0.zip"** [Git hub releases page](https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.5.0).
+- [x] Descarga la herramienta para pasar los archivos a la memoria del ESP8266 **"ESP8266FS-0.4.0.zip"** [Git hub releases page](https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.5.0).
 
-- Dentro de la carpeta de Arduino, cree una nueva carpeta con el nombre tools, si aún no existe y descomprima el **"ESP8266FS-0.4.0.zip"** dentro de ella y se debe ver como <carpeta arduino> /tools/ESP8266FS/tool/esp8266fs.jar).
+- [x] Dentro de la carpeta de Arduino, crea una nueva carpeta con el nombre tools, en el caso de que aún no exista, luego descomprime el **"ESP8266FS-0.4.0.zip"** dentro de ella, se debe ver como <carpeta arduino> /tools/ESP8266FS/tool/esp8266fs.jar).
 
 !["Captura Tools"](imagen/captura_tools.png)
 
-Para que se pueda realizar la instalación debes asegurare que en preferencia este la carpeta raiz de donde se encuentra tu caprpeta tools para que pueda leer el .jar: 
+- Para que se pueda realizar la instalación debes asegurare que en preferencia este la carpeta raíz de donde se encuentra tu carpeta tools para que pueda leer el .jar: 
 
 !["Captura Tools"](imagen/preferencias.png)
 
 
-- Reinicie Arduino IDE.
-- Seleccione "herramientas> Carga de datos de boceto ESP8266" estará allí.
+- Reinicia Arduino IDE.
+- Ve a "Herramientas" y **"ESP8266 Skerch Data Upload"** estará allí.
 
 !["Preferencias"](imagen/herramienta.png)
 
@@ -215,20 +226,47 @@ Para que se pueda realizar la instalación debes asegurare que en preferencia es
 
 ### Parte 3: Descargando el certificado AWS en tu NodeMCU ESP8266.
 
-Debes asegurarte que la carpeta **data** que contiene los certificados este en la misma carpeta donde se encuentra tu codigo Arduino, como se muestra a continuación.
+- En Arduino Crea un nuevo proyecto y salvalo para que te cree una nueva carpeta. 
+
+Para este ejemplo nombre a mi proyecto **"Inicindo_AWS_IoT"**
+
+- Luego pega la carpeta **data** dentro de el:
 
 !["Carpeta Data"](imagen/carpeta_data.png)
 
+- Conecta el NodeMCU ESP8266 al computador y asegurate que lo tome en el puerto adeduado: 
+
+De esta forma puedes verificar que el dispositivo esta conectado al pc: 
+
+!["Preferencias"](imagen/nodo1.png)
+
+
+!["Preferencias"](imagen/nodo2.png)
+
+- Configura los siguientes parametros en Herramientas:
+
+**Upload Speed: "115200"**
+
+**Flash Size: "4MB"**
+
+!["Crer Tabla DynamodDB"](imagen/configuracion_herramientas.png)
+
+- Ve a **Herramientas>ESP82 Sketch Data Upload** eso dará inicio a la carga de los certificados en el NodeMCU ESP8266, puede tardar un poco no te preocupes. 
+
+!["Preferencias"](imagen/herramienta.png)
 
 ---
 
 ### Parte 4: Modificar el código para el NodeMCU ESP8266 al servidor AWS IoT. 
 
+
 Para que el código funcione debes: 
 
-- Copia el codigo para arduino del siguiente [Link](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/blob/master/ejercicio2.txt), este al igual que el anterir se se suscribe al tema **"data"** por lo que no es necesario modficar nada de lo anterior. 
+- Copia el codigo para arduino del siguiente [ejercicio2.txt](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/blob/master/ejercicio2.txt), este al igual que el anterir se se suscribe al tema **"data"** por lo que no es necesario modficar nada en AWS IoT Core. 
 
-- Pega el código en una pestaña limpia de Arduino y modifica los siguietes parametros: 
+- Pega el código en tu proyecto .ino:
+
+!["Carpeta Data"](imagen/carpeta_data.png)
 
 En estas lineas van los datos de WIFI necesarios para que el NodeMCU ESP8266 se pueda conectar y enviar la informacion al servidor AWS IoT
 ```
@@ -236,14 +274,14 @@ const char* ssid ="Electronics_Innovation";
 const char* password = "subscribe";
 ```
 
-También debes cambiar el AWS_endpoint, como en el ejercicio 1,  que es la dirección del agente MQTT para su cuenta de AWS en una región específica.
+También debes cambiar el AWS_endpoint, como en el ejercicio 1,  es la dirección del agente MQTT para tu cuenta AWS IoT Core en la región especifica.
 
 ```
 const char* AWS_endpoint = "xxxxxxxxxxxxxx-ats.iot.us-west-2.amazonaws.com"; //MQTT broker ip
 ```
 !["Configurar la prueba"](imagen/endpoint.png)
 
-- Asegúrese de que el nombre de los archivos coincida con los nombres de sus certificados reales en la carpeta **dato**.
+- Asegúrese de que el nombre de los archivos coincida con los nombres de sus certificados reales en la carpeta **data**.
 
 ```
 line no: 126> File cert = SPIFFS.open("/cert.der", "r"); //replace cert.crt eith your uploaded file name
@@ -258,44 +296,37 @@ line no:158 > File ca = SPIFFS.open("/ca.der", "r"); //replace ca eith your uplo
 #include <PubSubClient.h>
 #include <NTPClient.h>
 ```
-<PubSubClient.h> --> [Si no la tienes descargala aca](https://www.arduinolibraries.info/libraries/pub-sub-client)
+Las librerías que no tengas instaladas las puedes instalar de Herramientas > Administrar Bibliotecas. 
 
-<NTPClient.h> --> [Si no la tienes descargala aca](https://www.arduinolibraries.info/libraries/ntp-client)
+También las puedes buscar en google o el buscador de tu preferencia para descargar y las pegas en la carpeta **libraries** que se encuentra dentro de **Arduino**
 
-En el caso de compilar y te de error en **getFormattedDate** de NTPclient debes revisar que en **Arduino > libraries > NTPClient > NTPCliente.h** tenga la siguiente linea: 
+<NTPClient.h> --> Hice una modficación a la libreria original para que funcionara el comando **getFormattedDate**, la modificación la puedes encontrar dentro del github [libreria/NTPClient](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/tree/master/libreria/NTPClient)
 
-```
-String getFormattedDate(unsigned long secs = 0);
-```
-De lo cotrario puedes copiar y pegar la libereria de: 
-
-[NTPClient](https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/tree/master/libreria/NTPClient)
 
 ---
 ### Parte 5: Compilando y cargando el nuevo programa en NodeMCU ESP8266.
 
 En esta parte vamos a enviar los mismos mensajes que enviamos en el ejercicio 1 pero desde nuestro dispositivo real.
 
-- Conecta el NodeMCU ESP8266 al computador y asegurate que lo tome en el puerto adeduado: 
-
-!["Crer Tabla DynamodDB"](imagen/puerto.png)
-
-- Configura los siguientes parametros en Herramientas:
-
-**Upload Speed: "115200"**
-
-**Flash Size: "4MB"**
-
-!["Crer Tabla DynamodDB"](imagen/configuracion_herramientas.png)
-
-
-- Abre el código Arduino y seleccione el elemento de menú **Herramientas> ESP8266 Sketch Data Upload**. Esto debería comenzar a cargar los archivos en el la flash del ESP8266. Cuando termine, la barra de estado IDE mostrará el mensaje SPIFFS Image Uploaded. Puede que tarde unos minutos en sistemas.
 
 - Compila el programa y si todo esta correcto subelo a tu NodeMCU ESP8266. 
 
+Para compilar: 
+
+!["Compila"](imagen/compila1.png)
+
+!["Compila"](imagen/compila2.jpg)
+
+Para subirlo al NodeMCU ESP8266:
+
+!["Compila"](imagen/subir1.png)
+
+!["Compila"](imagen/subir2.jpg)
+
+
 - Ahora seremos capaces de ver los datos enviados en AWS IoT Core como lo hicimos en el ejercicio anterior. 
 
-En el servicio de AWS IoT Core ve al menu de abajo a la izquierda **"Prueba"** y en Publicar especifica el mensaje que para nuestro caso de llama **"data"**, como lo puedes ver en e codigo. 
+- En el servicio de AWS IoT Core ve al menu de abajo a la izquierda **"Prueba"** y en Publicar especifica el mensaje que para nuestro caso de llama **"data"**, como lo puedes ver en e codigo. 
 
 ```
 client.publish("data", msg);
@@ -311,7 +342,10 @@ Finalizas dandole click a **"Suscribirse al tema"**
 
 Tambien puedes ver la informacion enviada en Arduino desde **Monitor Serie** como se muestra en la imagen a continuación: 
 
+
 !["Configurar la prueba"](imagen/monitor_serie.png)
+
+!["Configurar la prueba"](imagen/monitor_serie2.jpg)
 
 
 ---
@@ -432,8 +466,7 @@ No olvides habilitar la regla.
 y envia tus notificaciones!! 
 
 ---
-
-### Parte 3: Envió de notificaciones a AWS CloudWatch.
+.
 
 
 
