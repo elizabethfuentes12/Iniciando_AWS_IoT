@@ -466,7 +466,11 @@ No olvides habilitar la regla.
 y envia tus notificaciones!! 
 
 ---
-.
+## Limpieza: 
+
+Estos servicios no generan costos si se no se utilizan, pero por higiene y orden es recomendable borrarlos. 
+
+
 
 
 
