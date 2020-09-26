@@ -7,7 +7,7 @@
 #include <DallasTemperature.h>
 
 // GPIO where the DS18B20 is connected to
-const int oneWireBus = 4;     
+const int oneWireBus = 0;     
 
 // Setup a oneWire instance to communicate with any OneWire devices
 OneWire oneWire(oneWireBus);

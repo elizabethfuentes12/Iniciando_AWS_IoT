@@ -1,0 +1,249 @@
+/*Developed by M V Subrahmanyam - https://www.linkedin.com/in/veera-subrahmanyam-mediboina-b63997145/
+Project: AWS | NodeMCU ESP32 Tutorials
+Electronics Innovation - www.electronicsinnovation.com
+
+GitHub - https://github.com/VeeruSubbuAmi
+YouTube - http://bit.ly/Electronics_Innovation
+
+Upload date: 07 October 2019
+
+AWS Iot Core
+
+This example needs https://github.com/esp8266/arduino-esp8266fs-plugin
+
+It connects to AWS IoT server then:
+- publishes "hello world" to the topic "outTopic" every two seconds
+- subscribes to the topic "inTopic", printing out any messages
+*/
+
+#include "FS.h"
+#include <ESP8266WiFi.h>
+#include <WiFiUdp.h>
+#include <PubSubClient.h> // Si no la tienes descargala aca: https://www.arduinolibraries.info/libraries/pub-sub-client
+#include <NTPClient.h> // Si no la tienes descargala aca: https://www.arduinolibraries.info/libraries/ntp-client
+
+// Libreria para el sensor: 
+#include <OneWire.h>
+#include <DallasTemperature.h>
+
+/* Para que getFormattedDate de NTPclient funcione debes asegurarte de que NTPCliente.h tenga la siguiente linea, 
+String getFormattedDate(unsigned long secs = 0);
+
+de lo cotrario puedes copiar y pegar la libereria de 
+
+https://github.com/elizabethfuentes12/Iniciando_AWS_IoT/tree/master/libreria/NTPClient
+*/
+
+// Actualiza los valores de tu WIFI.
+const char* ssid = "Ensamblador";
+const char* password = "klobsang123";
+
+// Sensor GPIO where the DS18B20 is connected to
+const int oneWireBus = 0;   
+
+// Sensor Setup a oneWire instance to communicate with any OneWire devices
+OneWire oneWire(oneWireBus);
+// Pass our oneWire reference to Dallas Temperature sensor 
+DallasTemperature sensors(&oneWire);
+
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP, "pool.ntp.org");
+
+const char* AWS_endpoint = "a1w8sdhvrtune7-ats.iot.us-east-1.amazonaws.com"; //MQTT broker ip
+
+void callback(char* topic, byte* payload, unsigned int length) {
+Serial.print("Message arrived [");
+Serial.print(topic);
+Serial.print("] ");
+for (int i = 0; i < length; i++) {
+Serial.print((char)payload[i]);
+}
+Serial.println();
+
+}
+WiFiClientSecure espClient;
+PubSubClient client(AWS_endpoint, 8883, callback, espClient); //set MQTT port number to 8883 as per //standard
+long lastMsg = 0;
+char msg[150];
+char copy[150];
+String mensaje;
+int value = 0;
+long randomID;
+long randomTemp;
+String formattedDate;
+String dayStamp;
+String timeStamp;
+
+void setup_wifi() {
+
+delay(10);
+// We start by connecting to a WiFi network
+espClient.setBufferSizes(512, 512);
+Serial.println();
+Serial.print("Connecting to ");
+Serial.println(ssid);
+
+WiFi.begin(ssid, password);
+
+while (WiFi.status() != WL_CONNECTED) {
+delay(500);
+Serial.print(".");
+}
+
+Serial.println("");
+Serial.println("WiFi connected");
+Serial.println("IP address: ");
+Serial.println(WiFi.localIP());
+
+timeClient.begin();
+
+while(!timeClient.update()){
+timeClient.forceUpdate();
+}
+
+espClient.setX509Time(timeClient.getEpochTime());
+
+}
+
+void reconnect() {
+// Loop until we're reconnected
+while (!client.connected()) {
+Serial.print("Attempting MQTT connection...");
+// Attempt to connect
+if (client.connect("ESPthing")) {
+Serial.println("connected");
+// Once connected, publish an announcement...
+client.publish("outTopic", "hello world");
+// ... and resubscribe
+client.subscribe("inTopic");
+} else {
+Serial.print("failed, rc=");
+Serial.print(client.state());
+Serial.println(" try again in 5 seconds");
+
+char buf[256];
+espClient.getLastSSLError(buf,256);
+Serial.print("WiFiClientSecure SSL error: ");
+Serial.println(buf);
+
+// Wait 5 seconds before retrying
+delay(5000);
+}
+}
+}
+
+void setup() {
+Serial.begin(115200);
+Serial.setDebugOutput(true);
+// initialize digital pin LED_BUILTIN as an output.
+pinMode(LED_BUILTIN, OUTPUT);
+setup_wifi();
+delay(1000);
+if (!SPIFFS.begin()) {
+Serial.println("Failed to mount file system");
+// Start the DS18B20 sensor
+sensors.begin();
+return;
+}
+
+Serial.print("Heap: "); Serial.println(ESP.getFreeHeap());
+
+// Load certificate file
+File cert = SPIFFS.open("/cert.der", "r"); //replace cert.crt eith your uploaded file name
+if (!cert) {
+Serial.println("Failed to open cert file");
+}
+else
+Serial.println("Success to open cert file");
+
+delay(1000);
+
+if (espClient.loadCertificate(cert))
+Serial.println("cert loaded");
+else
+Serial.println("cert not loaded");
+
+// Load private key file
+File private_key = SPIFFS.open("/private.der", "r"); //replace private eith your uploaded file name
+if (!private_key) {
+Serial.println("Failed to open private cert file");
+}
+else
+Serial.println("Success to open private cert file");
+
+delay(1000);
+
+if (espClient.loadPrivateKey(private_key))
+Serial.println("private key loaded");
+else
+Serial.println("private key not loaded");
+
+// Load CA file
+File ca = SPIFFS.open("/ca.der", "r"); //replace ca eith your uploaded file name
+if (!ca) {
+Serial.println("Failed to open ca ");
+}
+else
+Serial.println("Success to open ca");
+
+delay(1000);
+
+if(espClient.loadCACert(ca))
+Serial.println("ca loaded");
+else
+Serial.println("ca failed");
+
+Serial.print("Heap: "); Serial.println(ESP.getFreeHeap());
+}
+
+void loop() {
+  
+if (!client.connected()) {
+reconnect();
+}
+timeClient.setTimeOffset(-10800);
+// Para ajustar Diferencia horaria GMT/UTC:
+// GMT +1 = 3600
+// GMT +8 = 28800
+// GMT -1 = -3600
+// GMT 0 = 0
+// GMT -4 = -14400
+// GMT -3 = 10800
+
+client.loop();
+long now = millis();
+if (now - lastMsg > 2000) {
+lastMsg = now;
+++value;
+randomID = random(0,10);
+//randomTemp = random(0,120);
+// Start the DS18B20 sensor
+
+sensors.requestTemperatures(); 
+float temperatureC = sensors.getTempCByIndex(0);
+
+timeClient.update();
+formattedDate = timeClient.getFormattedDate();
+int splitT = formattedDate.indexOf("T");
+dayStamp = formattedDate.substring(0, splitT);
+timeStamp = formattedDate.substring(splitT+1, formattedDate.length()-1);
+
+//Aca armamos el mensaje que vamos a enviaremos
+mensaje ="{\"ID\":\""+String(randomID)+"\",\"Temperatura\":"+int(temperatureC)+",\"Fecha\":\""+ String(dayStamp)+" "+String(timeStamp)+"\",\"Evento\":\""+String(value)+"\"}";
+
+//Se envia en caracteres por lo que debemos convertir el string en caracteres. 
+mensaje.toCharArray(copy, 150);
+
+//aca armamos a msg que es el que enviaremos a AWS Cloud. 
+snprintf (msg,150,copy);
+
+Serial.print("Mensaje enviado: ");
+Serial.println(msg);
+client.publish("data", msg); //data es nuestro tema para filtrar en AWS IoT
+//Serial.print("Heap: "); Serial.println(ESP.getFreeHeap()); //Low heap can cause problems
+}
+digitalWrite(LED_BUILTIN, HIGH); // turn the LED on (HIGH is the voltage level)
+delay(100); // wait for a second
+digitalWrite(LED_BUILTIN, LOW); // turn the LED off by making the voltage LOW
+delay(100); // wait for a second
+}

@@ -255,6 +255,9 @@ De esta forma puedes verificar que el dispositivo esta conectado al pc:
 
 !["Preferencias"](imagen/herramienta.png)
 
+Cuando este listo veras lo siguiente: 
+!["Preferencias"](imagen/flash.png)
+
 ---
 
 ### Parte 4: Modificar el código para el NodeMCU ESP8266 al servidor AWS IoT. 
